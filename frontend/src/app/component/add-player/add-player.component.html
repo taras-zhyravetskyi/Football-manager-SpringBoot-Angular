@@ -1,0 +1,22 @@
+<div class="add-player-container">
+  <h2>Add New Player</h2>
+  <form (ngSubmit)="addPlayer()">
+    <label>
+      Name:
+      <input type="text" [(ngModel)]="player.name" name="name" required>
+    </label>
+    <label>
+      Age:
+      <input type="number" [(ngModel)]="player.age" name="age" required>
+    </label>
+    <label>
+      Months of Experience:
+      <input type="number" [(ngModel)]="player.monthsOfExperience" name="monthsOfExperience" required>
+    </label>
+    <label>
+      Team ID:
+      <input type="number" [(ngModel)]="player.teamId" name="teamId" required>
+    </label>
+    <button type="submit">Add Player</button>
+  </form>
+</div>

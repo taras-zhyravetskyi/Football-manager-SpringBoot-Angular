@@ -1,0 +1,18 @@
+<div *ngIf="team" class="team-details-container">
+  <h2>Team Details</h2>
+  <p>ID: {{ team.id }}</p>
+  <p>Name: {{ team.name }}</p>
+  <p>Country: {{ team.country }}</p>
+  <p>City: {{ team.city }}</p>
+  <p>Commission Rate: {{ team.commissionRate }}%</p>
+  <p>Account Balance: {{ team.accountBalance | currency }}</p>
+  <button routerLink="/teams/{{ team.id }}/edit">Edit</button>
+
+  <h3>Players</h3>
+  <ul>
+    <li *ngFor="let player of team.players">
+      <a class="player-name" routerLink="/players/{{player.id}}">{{ player.name }}</a>
+    </li>
+  </ul>
+  <button type="button" (click)="goBack()">Go back</button>
+</div>

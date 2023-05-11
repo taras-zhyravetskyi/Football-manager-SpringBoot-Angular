@@ -1,0 +1,26 @@
+<div class="add-team-container">
+  <h2>Add new Team</h2>
+  <form *ngIf="team" (ngSubmit)="addTeam()">
+    <div>
+      <label for="name">Team:</label>
+      <input [(ngModel)]="team.name" id="name" name="name" required>
+    </div>
+    <div>
+      <label for="country">Country:</label>
+      <input [(ngModel)]="team.country" id="country" name="country" required>
+    </div>
+    <div>
+      <label for="city">City:</label>
+      <input [(ngModel)]="team.city" id="city" name="city" required>
+    </div>
+    <div>
+      <label for="commissionRate">Commission (%):</label>
+      <input [(ngModel)]="team.commissionRate" id="commissionRate" name="commissionRate" type="number" min=0 max=100 step="0.01" required>
+    </div>
+    <div>
+      <label for="accountBalance">Balance account($):</label>
+      <input [(ngModel)]="team.accountBalance" id="accountBalance" name="accountBalance" type="number" required>
+    </div>
+    <button type="submit">Add team</button>
+  </form>
+</div>

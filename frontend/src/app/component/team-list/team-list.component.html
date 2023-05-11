@@ -1,0 +1,28 @@
+<div class="team-list-container" *ngIf="teams.length > 0">
+  <h2>Team List</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Country</th>
+      <th>City</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let team of teams">
+      <td>{{ team.id }}</td>
+      <td>{{ team.name }}</td>
+      <td>{{ team.country }}</td>
+      <td>{{ team.city }}</td>
+      <td>
+        <button routerLink="/teams/{{team.id}}">Details</button>
+        <button (click)="deleteTeam(team.id)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <app-add-team (teamAdded)="getTeams()"></app-add-team>
+</div>
+

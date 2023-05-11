@@ -1,0 +1,25 @@
+<div class="edit-player-container">
+  <h2>Edit Player</h2>
+  <form *ngIf="player">
+    <label>
+      Name:
+      <input [(ngModel)]="player.name" name="name" />
+    </label>
+    <label>
+      Age:
+      <input [(ngModel)]="player.age" name="age" />
+    </label>
+    <label>
+      Months of Experience:
+      <input [(ngModel)]="player.monthsOfExperience" name="monthsOfExperience" />
+    </label>
+    <label>
+      Team ID:
+      <input [(ngModel)]="player.teamId" name="teamId" />
+    </label>
+    <div class="buttons">
+      <button (click)="updatePlayer()">Update</button>
+      <button (click)="goBack()">Go back</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,27 @@
+<div class="player-detail-container">
+  <h2>Player Details</h2>
+  <div class="player-info">
+    <p><strong>ID:</strong> {{ player.id }}</p>
+    <p><strong>Name:</strong> {{ player.name }}</p>
+    <p><strong>Age:</strong> {{ player.age }}</p>
+    <p><strong>Months of Experience:</strong> {{ player.monthsOfExperience }}</p>
+    <p><strong>Start of Career:</strong> {{ getCareerStartDate() | date }}</p>
+    <p><strong>Team:</strong> {{ player.teamName }}</p>
+  </div>
+  <div class="buttons">
+    <button routerLink="/players/{{ player.id }}/edit">Edit</button>
+    <button (click)="goBack()">Go Back</button>
+  </div>
+  <div class="transfer">
+    <h3>Transfer Player</h3>
+    <form (ngSubmit)="transferPlayer()">
+      <label>
+        Select New Team:
+        <select [(ngModel)]="newTeamId" name="newTeamId" required>
+          <option *ngFor="let team of teams" [value]="team.id">{{ team.name }}</option>
+        </select>
+      </label>
+      <button type="submit">Transfer</button>
+    </form>
+  </div>
+</div>

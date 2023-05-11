@@ -1,0 +1,28 @@
+<div class="edit-team-container">
+  <h2>Edit Team</h2>
+  <form *ngIf="team" (ngSubmit)="updateTeam()">
+    <div>
+      <label for="name">Team:</label>
+      <input [(ngModel)]="team.name" id="name" name="name" required>
+    </div>
+    <div>
+      <label for="country">Country:</label>
+      <input [(ngModel)]="team.country" id="country" name="country" required>
+    </div>
+    <div>
+      <label for="city">City:</label>
+      <input [(ngModel)]="team.city" id="city" name="city" required>
+    </div>
+    <div>
+      <label for="commissionRate">Commission (%):</label>
+      <input [(ngModel)]="team.commissionRate" id="commissionRate" name="commissionRate" type="number" min="0" max="100" required>
+    </div>
+    <div>
+      <label for="accountBalance">Balance account($):</label>
+      <input [(ngModel)]="team.accountBalance" id="accountBalance" name="accountBalance" type="number" min="0" required>
+    </div>
+    <button type="submit" >Update team</button>
+  </form>
+</div>
+  <button type="button" (click)="goBack()">Go back</button>
+
