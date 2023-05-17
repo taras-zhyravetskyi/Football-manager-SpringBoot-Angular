@@ -16,7 +16,7 @@
     <label>
       Team:
       <select [(ngModel)]="player.teamId" name="teamId" required>
-        <option [ngValue]="null">Select a team</option>
+        <option [ngValue]="null">No team</option>
         <option *ngFor="let team of teams" [ngValue]="team.id">{{team.name}}</option>
       </select>
     </label>

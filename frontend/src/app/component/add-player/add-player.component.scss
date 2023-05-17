@@ -17,12 +17,10 @@ label {
   font-weight: bold;
 }
 
-input {
-  padding: 0.25rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  width: 100%;
+label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
 }
 
 button {
@@ -39,4 +37,3 @@ button {
     background-color: #0056b3;
   }
 }
-
