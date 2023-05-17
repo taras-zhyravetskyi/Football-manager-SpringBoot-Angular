@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
 })
 export class EditPlayerComponent implements OnInit {
   player!: Player;
+  startDate!: Date;
 
   constructor(
     private playerService: PlayerService,
@@ -31,6 +32,11 @@ export class EditPlayerComponent implements OnInit {
   }
 
   updatePlayer(): void {
+    const startDate = new Date(this.startDate);
+    const currentDate = new Date();
+    const monthsOfExperience = this.calculateMonthsDifference(startDate, currentDate);
+    this.player.monthsOfExperience = monthsOfExperience;
+
     if (this.player) {
       this.playerService.updatePlayer(this.player, this.player.id).subscribe(() => {
         console.log('Player updated:', this.player);
@@ -41,5 +47,11 @@ export class EditPlayerComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  private calculateMonthsDifference(date1: Date, date2: Date): number {
+    const yearsDifference = date2.getFullYear() - date1.getFullYear();
+    const monthsDifference = date2.getMonth() - date1.getMonth();
+    return yearsDifference * 12 + monthsDifference;
   }
 }

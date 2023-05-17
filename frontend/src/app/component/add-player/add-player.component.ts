@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Player } from 'src/app/model/player';
 import { PlayerService } from 'src/app/service/player.service';
+import {TeamService} from "../../service/team.service";
+import {Team} from "../../model/team";
 
 @Component({
   selector: 'app-add-player',
@@ -9,16 +11,25 @@ import { PlayerService } from 'src/app/service/player.service';
 })
 export class AddPlayerComponent {
   player!: Player;
+  startDate!: Date;
+  teams: Team[] = [];
 
   @Output() playerAdded = new EventEmitter();
 
-  constructor(private playerService: PlayerService) {}
+  constructor(private playerService: PlayerService,
+              private teamService: TeamService) {}
 
   ngOnInit(): void {
     this.resetForm();
+    this.loadTeams();
   }
 
   addPlayer(): void {
+    const startDate = new Date(this.startDate);
+    const currentDate = new Date();
+    const monthsOfExperience = this.calculateMonthsDifference(startDate, currentDate);
+    this.player.monthsOfExperience = monthsOfExperience;
+
     if (this.player && this.player.name && this.player.age && this.player.monthsOfExperience) {
       this.playerService.createPlayer(this.player).subscribe({
         next: () => {
@@ -45,5 +56,16 @@ export class AddPlayerComponent {
       teamName: ''
     };
   }
-}
 
+  private calculateMonthsDifference(date1: Date, date2: Date): number {
+    const yearsDifference = date2.getFullYear() - date1.getFullYear();
+    const monthsDifference = date2.getMonth() - date1.getMonth();
+    return yearsDifference * 12 + monthsDifference;
+  }
+
+  loadTeams(): void {
+    this.teamService.getTeams().subscribe((teams) => {
+      this.teams = teams;
+    });
+  }
+}

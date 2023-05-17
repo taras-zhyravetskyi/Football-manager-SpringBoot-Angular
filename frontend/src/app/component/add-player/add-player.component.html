@@ -10,12 +10,15 @@
       <input type="number" [(ngModel)]="player.age" name="age" required>
     </label>
     <label>
-      Months of Experience:
-      <input type="number" [(ngModel)]="player.monthsOfExperience" name="monthsOfExperience" required>
+      Start Career Date:
+      <input type="date" [(ngModel)]="startDate" name="startDate" required>
     </label>
     <label>
-      Team ID:
-      <input type="number" [(ngModel)]="player.teamId" name="teamId" required>
+      Team:
+      <select [(ngModel)]="player.teamId" name="teamId" required>
+        <option [ngValue]="null">Select a team</option>
+        <option *ngFor="let team of teams" [ngValue]="team.id">{{team.name}}</option>
+      </select>
     </label>
     <button type="submit">Add Player</button>
   </form>
