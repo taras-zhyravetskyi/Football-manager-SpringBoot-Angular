@@ -12,5 +12,5 @@ public interface PlayerService {
 
     List<Player> findAll();
 
-    String transferPlayer(Long teamIdTo, Long playerId);
+    Player transferPlayer(Long teamToId, Long playerId);
 }

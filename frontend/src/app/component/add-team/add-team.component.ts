@@ -1,6 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {TeamCreationDto} from '../../model/team-creation-dto';
 import { TeamService } from '../../service/team.service';
+import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-add-team',
@@ -8,29 +9,38 @@ import { TeamService } from '../../service/team.service';
   styleUrls: ['./add-team.component.scss']
 })
 export class AddTeamComponent implements OnInit {
-  team!: TeamCreationDto;
   @Output() teamAdded = new EventEmitter();
 
-  constructor(private teamService: TeamService) { }
+  teamForm = this.fb.group({
+    name: ['', Validators.required],
+    country: ['', Validators.required],
+    city: ['', Validators.required],
+    commissionRate: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
+    accountBalance: [0, Validators.required],
+  });
 
-  ngOnInit(): void {
-    this.resetForm();
+  constructor(private teamService: TeamService,
+              private fb: FormBuilder
+  ) { }
+
+  ngOnInit() {
   }
 
   addTeam(): void {
-    if (
-      this.team &&
-      this.team.name &&
-      this.team.country &&
-      this.team.city &&
-      this.team.commissionRate &&
-      this.team.accountBalance
-    ) {
-      this.teamService.createTeam(this.team).subscribe({
+    if (this.teamForm.valid) {
+      const teamData: TeamCreationDto = {
+        name: this.teamForm.get('name')?.value ?? '',
+        country: this.teamForm.get('country')?.value ?? '',
+        city: this.teamForm.get('city')?.value ?? '',
+        commissionRate: this.teamForm.get('commissionRate')?.value ?? 0,
+        accountBalance: this.teamForm.get('accountBalance')?.value ?? 0,
+      };
+
+      this.teamService.createTeam(teamData).subscribe({
         next: (response) => {
           console.log('New team created:', response);
           this.teamAdded.emit();
-          this.resetForm();
+          this.teamForm.reset();
         },
         error: (error) => {
           console.log('Error creating team:', error);
@@ -39,15 +49,5 @@ export class AddTeamComponent implements OnInit {
     } else {
       console.log('Invalid team data');
     }
-  }
-
-  resetForm(): void {
-    this.team = {
-      name: '',
-      country: '',
-      city: '',
-      commissionRate: 0,
-      accountBalance: 0,
-    };
   }
 }

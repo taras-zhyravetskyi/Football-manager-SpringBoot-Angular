@@ -1,25 +1,34 @@
 <div class="add-player-container">
   <h2>Add New Player</h2>
-  <form (ngSubmit)="addPlayer()">
+  <form [formGroup]="playerForm" (ngSubmit)="addPlayer()">
     <label>
       Name:
-      <input type="text" [(ngModel)]="player.name" name="name" required>
+      <input type="text" formControlName="name" required>
+      <div *ngIf="playerForm.controls.name.invalid && playerForm.controls.name.touched">
+        Name is required (minimum 3 characters).
+      </div>
     </label>
     <label>
       Age:
-      <input type="number" [(ngModel)]="player.age" name="age" required>
+      <input type="number" formControlName="age" required>
+      <div *ngIf="playerForm.controls.age.invalid && playerForm.controls.age.touched">
+        Age is required (minimum 14).
+      </div>
     </label>
     <label>
       Start Career Date:
-      <input type="date" [(ngModel)]="startDate" name="startDate" required>
+      <input type="date" formControlName="startDate" required>
+      <div *ngIf="playerForm.controls.startDate.invalid && playerForm.controls.startDate.touched">
+        Start career date is required.
+      </div>
     </label>
     <label>
       Team:
-      <select [(ngModel)]="player.teamId" name="teamId" required>
+      <select formControlName="teamId" required>
         <option [ngValue]="null">No team</option>
         <option *ngFor="let team of teams" [ngValue]="team.id">{{team.name}}</option>
       </select>
     </label>
-    <button type="submit">Add Player</button>
+    <button type="submit" [disabled]="playerForm.invalid">Add Player</button>
   </form>
 </div>

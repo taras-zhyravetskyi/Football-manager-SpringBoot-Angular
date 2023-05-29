@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PlayerService } from 'src/app/service/player.service';
 import { Player } from 'src/app/model/player';
 import { Location } from '@angular/common';
-import {TeamService} from "../../service/team.service";
-import {Team} from "../../model/team";
+import { TeamService } from "../../service/team.service";
+import { Team } from "../../model/team";
 
 @Component({
   selector: 'app-player-details',
@@ -46,10 +46,6 @@ export class PlayerDetailsComponent implements OnInit {
     const currentDate = new Date();
     const careerStartDate = new Date(currentDate.setMonth(currentDate.getMonth() - this.player.monthsOfExperience));
     return careerStartDate;
-  }
-
-  editPlayer(): void {
-    this.router.navigate(['/players/', this.player.id, '/edit']);
   }
 
   goBack(): void {

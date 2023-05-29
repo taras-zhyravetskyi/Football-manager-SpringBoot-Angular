@@ -10,7 +10,6 @@ import { Team } from 'src/app/model/team';
   styleUrls: ['./team-details.component.scss']
 })
 export class TeamDetailsComponent implements OnInit {
-  teamId!: number;
   team!: Team;
 
   constructor(

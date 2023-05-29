@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/players")
@@ -25,16 +27,17 @@ public class PlayerController {
     private final RequestDtoMapper<PlayerRequestDto, Player> requestMapper;
     private final ResponseDtoMapper<PlayerResponseDto, Player> responseMapper;
 
-    @GetMapping("/transfer/{playerId}/{toTeamId}")
-    public String transferPlayer(
+    @GetMapping("/transfer/{playerId}/team/{teamToId}")
+    public PlayerResponseDto transferPlayer(
             @PathVariable Long playerId,
-            @PathVariable Long toTeamId
+            @PathVariable Long teamToId
     ) {
-        return playerService.transferPlayer(playerId, toTeamId);
+        return responseMapper.toDto(
+                playerService.transferPlayer(playerId, teamToId));
     }
 
     @PostMapping
-    public PlayerResponseDto save(@RequestBody PlayerRequestDto playerRequestDto) {
+    public PlayerResponseDto save(@Valid @RequestBody PlayerRequestDto playerRequestDto) {
         Player player = playerService.save(requestMapper.toModel(playerRequestDto));
         return responseMapper.toDto(player);
     }
@@ -51,7 +54,7 @@ public class PlayerController {
 
     @PutMapping("/{id}")
     public PlayerResponseDto update(
-            @RequestBody PlayerRequestDto playerRequestDto,
+            @Valid @RequestBody PlayerRequestDto playerRequestDto,
             @PathVariable Long id
     ) {
         Player player = requestMapper.toModel(playerRequestDto);

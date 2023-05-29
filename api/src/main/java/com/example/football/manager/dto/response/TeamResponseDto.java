@@ -14,8 +14,6 @@ public class TeamResponseDto {
     private BigDecimal commissionRate;
     private BigDecimal accountBalance;
     private List<PlayerResponseDtoName> players;
-    //private List<Long> playerIds;
-    //private List<String> playerNames;
 
     public TeamResponseDto() {
         players = new ArrayList<PlayerResponseDtoName>();

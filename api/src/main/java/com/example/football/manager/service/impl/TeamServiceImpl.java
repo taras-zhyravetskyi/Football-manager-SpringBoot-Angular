@@ -36,8 +36,8 @@ public class TeamServiceImpl implements TeamService {
 
         for (Player player : team.getPlayers()) {
             player.setTeam(null);
-            playerRepository.save(player);
         }
+        playerRepository.saveAll(team.getPlayers());
         teamRepository.delete(team);
     }
 

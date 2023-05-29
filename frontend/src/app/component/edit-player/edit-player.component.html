@@ -1,21 +1,21 @@
 <div class="edit-player-container">
   <h2>Edit Player</h2>
-  <form *ngIf="player">
+  <form [formGroup]="playerForm">
     <label>
       Name:
-      <input [(ngModel)]="player.name" name="name" />
+      <input formControlName="name" name="name" />
     </label>
     <label>
       Age:
-      <input [(ngModel)]="player.age" name="age" />
+      <input formControlName="age" name="age" />
     </label>
     <label>
       Start Career Date:
-      <input type="date" [(ngModel)]="startDate" name="startDate" required>
+      <input type="date" formControlName="startDate" name="startDate" required>
     </label>
     <label>
       Team ID:
-      <input [(ngModel)]="player.teamId" name="teamId" />
+      <input formControlName="teamId" name="teamId" />
     </label>
     <div class="buttons">
       <button (click)="updatePlayer()">Update</button>

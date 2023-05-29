@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PlayerRepository extends JpaRepository<Player, Long> {
-
     @Query(value = "FROM Player p LEFT JOIN FETCH p.team t WHERE p.id = ?1")
     Optional<Player> findById(Long id);
 

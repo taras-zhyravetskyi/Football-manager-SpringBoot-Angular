@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Team } from '../model/team';
 import {TeamCreationDto} from "../model/team-creation-dto";
+import { environment} from "../../environments/environments";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeamService {
-  private apiUrl = 'http://localhost:8080/teams';
+  private readonly apiUrl = environment.apiUrlHost + '/teams';
 
   constructor(private http: HttpClient) {}
 

@@ -18,17 +18,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/teams")
 @AllArgsConstructor
-@EqualsAndHashCode
 public class TeamController {
     private final TeamService teamService;
     private final RequestDtoMapper<TeamRequestDto, Team> requestMapper;
     private final ResponseDtoMapper<TeamResponseDto, Team> responseMapper;
 
     @PostMapping
-    public TeamResponseDto save(@RequestBody TeamRequestDto teamRequestDto) {
+    public TeamResponseDto save(@Valid @RequestBody TeamRequestDto teamRequestDto) {
         Team team = teamService.save(requestMapper.toModel(teamRequestDto));
         return responseMapper.toDto(team);
     }
@@ -45,7 +46,7 @@ public class TeamController {
 
     @PutMapping("/{id}")
     public TeamResponseDto update(
-            @RequestBody TeamRequestDto teamRequestDto,
+            @Valid @RequestBody TeamRequestDto teamRequestDto,
             @PathVariable Long id
     ) {
         Team team = requestMapper.toModel(teamRequestDto);

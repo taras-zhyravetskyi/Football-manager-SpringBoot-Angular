@@ -10,10 +10,10 @@ import {PlayerDetailsComponent} from "./component/player-details/player-details.
 const routes: Routes = [
   { path: 'teams', component: TeamListComponent },
   { path: 'teams/:id', component: TeamDetailsComponent },
-  { path: 'teams/:id/edit', component: EditTeamComponent },
+  { path: 'teams/:id/editing', component: EditTeamComponent },
   { path: 'players', component: PlayerListComponent },
   { path: 'players/:id', component: PlayerDetailsComponent },
-  { path: 'players/:id/edit', component: EditPlayerComponent }
+  { path: 'players/:id/editing', component: EditPlayerComponent }
 ];
 
 @NgModule({

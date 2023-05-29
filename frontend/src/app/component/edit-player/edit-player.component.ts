@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PlayerService } from 'src/app/service/player.service';
 import { Player } from 'src/app/model/player';
 import { Location } from '@angular/common';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-player',
@@ -10,14 +11,20 @@ import { Location } from '@angular/common';
   styleUrls: ['./edit-player.component.scss']
 })
 export class EditPlayerComponent implements OnInit {
-  player!: Player;
-  startDate!: Date;
+  playerForm = this.fb.group({
+    name: ['', [Validators.required, Validators.minLength(3)]],
+    age: ['', [Validators.required, Validators.min(14), Validators.pattern('^[0-9]*$')]],
+    startDate: ['', Validators.required],
+    teamId: ['', Validators.pattern('^[0-9]*$')]
+  });
+
 
   constructor(
     private playerService: PlayerService,
     private location: Location,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -27,22 +34,41 @@ export class EditPlayerComponent implements OnInit {
   getPlayer(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.playerService.getPlayerById(id).subscribe((player: Player) => {
-      this.player = player;
+      const startDate = this.calculateStartDate(player.monthsOfExperience);
+      this.playerForm.setValue({
+        name: player.name,
+        age: player.age.toString(),
+        startDate: startDate,
+        teamId: player.teamId.toString()
+      });
     });
   }
 
+
   updatePlayer(): void {
-    const startDate = new Date(this.startDate);
+    if (this.playerForm.invalid) {
+      console.log('Invalid player data');
+      return;
+    }
+
+    const startDateValue = this.playerForm.value.startDate;
+    const startDate = startDateValue ? new Date(startDateValue) : new Date();
     const currentDate = new Date();
     const monthsOfExperience = this.calculateMonthsDifference(startDate, currentDate);
-    this.player.monthsOfExperience = monthsOfExperience;
 
-    if (this.player) {
-      this.playerService.updatePlayer(this.player, this.player.id).subscribe(() => {
-        console.log('Player updated:', this.player);
-        this.router.navigate(['/players', this.player.id]);
-      });
-    }
+    const player: Player = {
+      id: Number(this.route.snapshot.paramMap.get('id')),
+      name: this.playerForm.value.name || '',
+      age: Number(this.playerForm.value.age) || 0,
+      monthsOfExperience: monthsOfExperience || 0,
+      teamId: Number(this.playerForm.value.teamId) || 0,
+      teamName: ''
+    };
+
+    this.playerService.updatePlayer(player, player.id).subscribe(() => {
+      console.log('Player updated:', player);
+      this.router.navigate(['/players', player.id]);
+    });
   }
 
   goBack(): void {
@@ -53,5 +79,20 @@ export class EditPlayerComponent implements OnInit {
     const yearsDifference = date2.getFullYear() - date1.getFullYear();
     const monthsDifference = date2.getMonth() - date1.getMonth();
     return yearsDifference * 12 + monthsDifference;
+  }
+
+  private calculateStartDate(monthsOfExperience: number): string {
+    const currentDate = new Date();
+    const yearsOfExperience = Math.floor(monthsOfExperience / 12);
+    const monthsRemainder = monthsOfExperience % 12;
+
+    const startYear = currentDate.getFullYear() - yearsOfExperience;
+    const startMonth = currentDate.getMonth() - monthsRemainder;
+
+    let startDate = new Date();
+    startDate.setFullYear(startYear);
+    startDate.setMonth(startMonth);
+
+    return startDate.toISOString().split('T')[0];
   }
 }
