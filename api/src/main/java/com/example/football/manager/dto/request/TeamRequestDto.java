@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.Data;
 
@@ -17,11 +18,11 @@ public class TeamRequestDto {
     private String country;
     @NotBlank
     private String city;
-    @NotBlank
+    @NotNull
     @Max(100)
     @Min(0)
     private BigDecimal commissionRate;
-    @NotBlank
+    @NotNull
     @Min(0)
     private BigDecimal accountBalance;
 }

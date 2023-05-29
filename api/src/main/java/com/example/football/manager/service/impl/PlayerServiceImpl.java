@@ -28,10 +28,7 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public Player save(Player player) {
-        Player savedPlayer = playerRepository.save(player);
-        return playerRepository.findById(savedPlayer.getId())
-                .orElseThrow(() -> new NoSuchElementException(
-                        "Can`t find player by id " + savedPlayer.getId()));
+        return playerRepository.save(player);
     }
 
     @Override
@@ -45,8 +42,8 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public String transferPlayer(Long playerId, Long teamIdTo) {
-        Team teamTo = teamService.findById(teamIdTo);
+    public Player transferPlayer(Long playerId, Long teamToId) {
+        Team teamTo = teamService.findById(teamToId);
         Player player = findById(playerId);
         Team teamFrom = teamService.findById(player.getTeam().getId());
 
@@ -55,10 +52,9 @@ public class PlayerServiceImpl implements PlayerService {
         BigDecimal totalAmount = transferCost.add(commission);
 
         updateAccountBalances(teamFrom, teamTo, totalAmount);
-        updatePlayerTeam(player, teamTo);
+        Player updatedPlayer = updatePlayerTeam(player, teamTo);
 
-        return String.format("Player %s has been transferred from team %s to team %s",
-                player.getName(), teamFrom.getName(),teamTo.getName());
+        return updatedPlayer;
     }
 
     private BigDecimal calculateTransferCost(Player player) {
@@ -85,8 +81,8 @@ public class PlayerServiceImpl implements PlayerService {
         teamService.save(teamFrom);
     }
 
-    private void updatePlayerTeam(Player player, Team teamTo) {
+    private Player updatePlayerTeam(Player player, Team teamTo) {
         player.setTeam(teamTo);
-        save(player);
+        return save(player);
     }
 }

@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Player } from "../model/player";
+import { environment} from "../../environments/environments";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerService {
-  private apiUrl = 'http://localhost:8080/players';
+  private readonly apiUrl = environment.apiUrlHost + '/players';
 
   constructor(private http: HttpClient) {}
 
@@ -31,7 +32,7 @@ export class PlayerService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  transferPlayer(playerId: number, toTeamId: number): Observable<string> {
-    return this.http.get<string>(`${this.apiUrl}/transfer/${playerId}/${toTeamId}`);
+  transferPlayer(playerId: number, teamToId: number): Observable<Player> {
+    return this.http.get<Player>(`${this.apiUrl}/transfer/${playerId}/team/${teamToId}`);
   }
 }

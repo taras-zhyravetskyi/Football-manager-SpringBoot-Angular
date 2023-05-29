@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 public class TeamMapper implements
         RequestDtoMapper<TeamRequestDto, Team>,
         ResponseDtoMapper<TeamResponseDto, Team> {
-
     @Override
     public Team toModel(TeamRequestDto dto) {
         Team team = new Team();
@@ -27,22 +26,16 @@ public class TeamMapper implements
     }
 
     @Override
-    public TeamResponseDto toDto(Team model) {
+    public TeamResponseDto toDto(Team team) {
         TeamResponseDto dto = new TeamResponseDto();
-        dto.setId(model.getId());
-        dto.setName(model.getName());
-        dto.setCountry(model.getCountry());
-        dto.setCity(model.getCity());
-        dto.setAccountBalance(model.getAccountBalance());
-        dto.setCommissionRate(model.getCommissionRate());
-        /*dto.setPlayerIds(model.getPlayers().stream()
-                .map(Player::getId)
-                .toList());
-        dto.setPlayerNames(model.getPlayers().stream()
-                .map(Player::getName)
-                .toList());*/
-        if (model.getPlayers() != null) {
-            model.getPlayers().stream()
+        dto.setId(team.getId());
+        dto.setName(team.getName());
+        dto.setCountry(team.getCountry());
+        dto.setCity(team.getCity());
+        dto.setAccountBalance(team.getAccountBalance());
+        dto.setCommissionRate(team.getCommissionRate());
+        if (team.getPlayers() != null) {
+            team.getPlayers().stream()
                     .forEach(p -> {
                         PlayerResponseDtoName playerDto = new PlayerResponseDtoName();
                         playerDto.setId(p.getId());

@@ -27,17 +27,16 @@ public class PlayerMapper implements
     }
 
     @Override
-    public PlayerResponseDto toDto(Player model) {
+    public PlayerResponseDto toDto(Player player) {
         PlayerResponseDto dto = new PlayerResponseDto();
-        dto.setId(model.getId());
-        dto.setAge(model.getAge());
-        dto.setName(model.getName());
-        dto.setMonthsOfExperience(model.getMonthsOfExperience());
-        dto.setTeamId(
-                model.getTeam() == null ? null : model.getTeam().getId());
-        dto.setTeamName(
-                model.getTeam() == null ? null : model.getTeam().getName()
-        );
+        dto.setId(player.getId());
+        dto.setAge(player.getAge());
+        dto.setName(player.getName());
+        dto.setMonthsOfExperience(player.getMonthsOfExperience());
+        if (player.getTeam() != null) {
+            dto.setTeamId(player.getTeam().getId());
+            dto.setTeamName(player.getTeam().getName());
+        }
         return dto;
     }
 }
