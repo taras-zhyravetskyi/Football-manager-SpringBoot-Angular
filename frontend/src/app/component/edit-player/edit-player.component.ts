@@ -8,16 +8,15 @@ import { FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-edit-player',
   templateUrl: './edit-player.component.html',
-  styleUrls: ['./edit-player.component.scss']
+  styleUrls: ['./edit-player.component.scss'],
 })
 export class EditPlayerComponent implements OnInit {
   playerForm = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(3)]],
     age: ['', [Validators.required, Validators.min(14), Validators.pattern('^[0-9]*$')]],
     startDate: ['', Validators.required],
-    teamId: ['', Validators.pattern('^[0-9]*$')]
+    teamId: ['', Validators.pattern('^[0-9]*$')],
   });
-
 
   constructor(
     private playerService: PlayerService,
@@ -39,11 +38,10 @@ export class EditPlayerComponent implements OnInit {
         name: player.name,
         age: player.age.toString(),
         startDate: startDate,
-        teamId: player.teamId.toString()
+        teamId: player.teamId.toString(),
       });
     });
   }
-
 
   updatePlayer(): void {
     if (this.playerForm.invalid) {
@@ -62,7 +60,7 @@ export class EditPlayerComponent implements OnInit {
       age: Number(this.playerForm.value.age) || 0,
       monthsOfExperience: monthsOfExperience || 0,
       teamId: Number(this.playerForm.value.teamId) || 0,
-      teamName: ''
+      teamName: '',
     };
 
     this.playerService.updatePlayer(player, player.id).subscribe(() => {

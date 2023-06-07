@@ -1,18 +1,25 @@
 <div *ngIf="team" class="team-details-container">
-  <h2>Team Details</h2>
-  <p>ID: {{ team.id }}</p>
-  <p>Name: {{ team.name }}</p>
-  <p>Country: {{ team.country }}</p>
-  <p>City: {{ team.city }}</p>
-  <p>Commission Rate: {{ team.commissionRate }}%</p>
-  <p>Account Balance: {{ team.accountBalance | currency }}</p>
-  <button routerLink="/teams/{{ team.id }}/editing">Edit</button>
+  <mat-card class="mat-elevation-z8">
+    <mat-card-header>
+      <mat-card-title>{{ team.name }}</mat-card-title>
+      <mat-card-subtitle>{{ team.country }}, {{ team.city }}</mat-card-subtitle>
+    </mat-card-header>
 
-  <h3>Players</h3>
-  <ul>
-    <li *ngFor="let player of team.players">
-      <a class="player-name" routerLink="/players/{{player.id}}">{{ player.name }}</a>
-    </li>
-  </ul>
-  <button type="button" (click)="goBack()">Go back</button>
+    <mat-card-content>
+      <p><b>Commission Rate:</b> {{ team.commissionRate }}%</p>
+      <p><b>Account Balance:</b> {{ team.accountBalance | currency }}</p>
+
+      <h3>Players: </h3>
+      <mat-list>
+        <mat-list-item class="mat-list-item" *ngFor="let player of team.players">
+          <a class="player-name" routerLink="/players/{{player.id}}">{{ player.name }}</a>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-button routerLink="/teams/{{ team.id }}/editing">Edit</button>
+      <button mat-button type="button" (click)="goBack()">Go back</button>
+    </mat-card-actions>
+  </mat-card>
 </div>

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {TeamCreationDto} from '../../model/team-creation-dto';
 import { TeamService } from '../../service/team.service';
-import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-add-team',
@@ -16,7 +16,7 @@ export class AddTeamComponent implements OnInit {
     country: ['', Validators.required],
     city: ['', Validators.required],
     commissionRate: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
-    accountBalance: [0, Validators.required],
+    accountBalance: [0, [Validators.required, Validators.min(0)]],
   });
 
   constructor(private teamService: TeamService,

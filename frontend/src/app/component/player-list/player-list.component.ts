@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlayerService } from 'src/app/service/player.service';
 import { Player } from 'src/app/model/player';
@@ -10,6 +10,7 @@ import { Player } from 'src/app/model/player';
 })
 export class PlayerListComponent implements OnInit {
   players: Player[] = [];
+  displayedColumns: string[] = ['id', 'name', 'age', 'monthsOfExperience', 'teamName', 'actions'];
 
   constructor(
     private playerService: PlayerService,
@@ -30,5 +31,12 @@ export class PlayerListComponent implements OnInit {
     this.playerService.deletePlayer(id).subscribe(() => {
       this.getPlayers();
     });
+  }
+
+  scrollToAddPlayer(): void {
+    const element = document.getElementById('add-player');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 }

@@ -1,27 +1,39 @@
 <div class="edit-team-container">
   <h2>Edit Team</h2>
-  <form [formGroup]="teamForm" (ngSubmit)="updateTeam()">
-    <div>
-      <label for="name">Team:</label>
-      <input formControlName="name" id="name" name="name" required>
-    </div>
-    <div>
-      <label for="country">Country:</label>
-      <input formControlName="country" id="country" name="country" required>
-    </div>
-    <div>
-      <label for="city">City:</label>
-      <input formControlName="city" id="city" name="city" required>
-    </div>
-    <div>
-      <label for="commissionRate">Commission (%):</label>
-      <input formControlName="commissionRate" id="commissionRate" name="commissionRate" type="number" min="0" max="100" required>
-    </div>
-    <div>
-      <label for="accountBalance">Balance account($):</label>
-      <input formControlName="accountBalance" id="accountBalance" name="accountBalance" type="number" min="0" required>
-    </div>
-    <button type="submit" >Update team</button>
-  </form>
+  <div class="form-container">
+    <form [formGroup]="teamForm" (ngSubmit)="updateTeam()">
+      <div>
+        <mat-form-field>
+          <mat-label>Team:</mat-label>
+          <input matInput formControlName="name" required>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Country:</mat-label>
+          <input matInput formControlName="country" required>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>City:</mat-label>
+          <input matInput formControlName="city" required>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Commission (%):</mat-label>
+          <input matInput formControlName="commissionRate" type="number" min="0" max="100" required>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Balance account($):</mat-label>
+          <input matInput formControlName="accountBalance" type="number" min="0" required>
+        </mat-form-field>
+      </div>
+      <button mat-raised-button color="primary" type="submit">Update team</button>
+    </form>
+  </div>
 </div>
-<button type="button" (click)="goBack()">Go back</button>
+<button mat-button (click)="goBack()">Go back</button>

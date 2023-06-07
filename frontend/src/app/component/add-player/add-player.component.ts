@@ -1,16 +1,16 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { PlayerService } from 'src/app/service/player.service';
-import { TeamService } from "../../service/team.service";
-import { Team } from "../../model/team";
-import {Player} from "../../model/player";
+import { TeamService } from '../../service/team.service';
+import { Team } from '../../model/team';
+import { Player } from '../../model/player';
 
 @Component({
   selector: 'app-add-player',
   templateUrl: './add-player.component.html',
-  styleUrls: ['./add-player.component.scss']
+  styleUrls: ['./add-player.component.scss'],
 })
-export class AddPlayerComponent {
+export class AddPlayerComponent implements OnInit {
   teams: Team[] = [];
 
   @Output() playerAdded = new EventEmitter();
@@ -19,12 +19,14 @@ export class AddPlayerComponent {
     name: ['', [Validators.required, Validators.minLength(3)]],
     age: ['', [Validators.required, Validators.min(14)]],
     startDate: ['', Validators.required],
-    teamId: ['']
+    teamId: [''],
   });
 
-  constructor(private playerService: PlayerService,
-              private teamService: TeamService,
-              private fb: FormBuilder) {}
+  constructor(
+    private playerService: PlayerService,
+    private teamService: TeamService,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.loadTeams();
@@ -48,9 +50,8 @@ export class AddPlayerComponent {
       age: Number(this.playerForm.value.age) || 0,
       monthsOfExperience: monthsOfExperience || 0,
       teamId: Number(this.playerForm.value.teamId) || 0,
-      teamName: ''
+      teamName: '',
     };
-
 
     this.playerService.createPlayer(player).subscribe({
       next: () => {
@@ -60,7 +61,7 @@ export class AddPlayerComponent {
       },
       error: (error) => {
         console.log('Error creating player:', error);
-      }
+      },
     });
   }
 

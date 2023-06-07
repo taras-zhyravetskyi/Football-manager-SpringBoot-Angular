@@ -1,28 +1,47 @@
-<div class="team-list-container" *ngIf="teams.length > 0">
-  <h2>Team List</h2>
-  <table>
-    <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Country</th>
-      <th>City</th>
-      <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let team of teams">
-      <td>{{ team.id }}</td>
-      <td>{{ team.name }}</td>
-      <td>{{ team.country }}</td>
-      <td>{{ team.city }}</td>
-      <td>
-        <button routerLink="/teams/{{team.id}}">Details</button>
-        <button (click)="deleteTeam(team.id)">Delete</button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-  <app-add-team (teamAdded)="getTeams()"></app-add-team>
-</div>
+<div class="team-list-container">
+  <div class="header">
+    <button mat-raised-button class="invisible-button">Add new Team</button>
+    <h2>Team List</h2>
+    <button mat-raised-button color="primary" (click)="scrollToAddTeam()">Add new Team</button>
+  </div>
 
+  <mat-table [dataSource]="teams" class="mat-elevation-z8">
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef class="align-center">ID</mat-header-cell>
+      <mat-cell *matCellDef="let team" class="align-center">{{ team.id }}</mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef class="align-center">Name</mat-header-cell>
+      <mat-cell *matCellDef="let team" class="align-center">{{ team.name }}</mat-cell>
+    </ng-container>
+
+    <!-- Country Column -->
+    <ng-container matColumnDef="country">
+      <mat-header-cell *matHeaderCellDef class="align-center">Country</mat-header-cell>
+      <mat-cell *matCellDef="let team" class="align-center">{{ team.country }}</mat-cell>
+    </ng-container>
+
+    <!-- City Column -->
+    <ng-container matColumnDef="city">
+      <mat-header-cell *matHeaderCellDef class="align-center">City</mat-header-cell>
+      <mat-cell *matCellDef="let team" class="align-center">{{ team.city }}</mat-cell>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef class="align-center">Actions</mat-header-cell>
+      <mat-cell *matCellDef="let team" class="align-center">
+        <button mat-raised-button color="primary" [routerLink]="['/teams', team.id]">Details</button>
+        <button mat-raised-button color="warn" (click)="deleteTeam(team.id)">Delete</button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <app-add-team class="app-add-team" (teamAdded)="getTeams()" id="add-team"></app-add-team>
+</div>

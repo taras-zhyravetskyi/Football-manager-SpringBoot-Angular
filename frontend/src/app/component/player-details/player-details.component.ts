@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlayerService } from 'src/app/service/player.service';
-import { Player } from 'src/app/model/player';
 import { Location } from '@angular/common';
+import { Player } from 'src/app/model/player';
 import { TeamService } from "../../service/team.service";
 import { Team } from "../../model/team";
 
@@ -26,7 +26,7 @@ export class PlayerDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPlayer();
-    this.getTeams()
+    this.getTeams();
   }
 
   getPlayer(): void {
@@ -44,7 +44,9 @@ export class PlayerDetailsComponent implements OnInit {
 
   getCareerStartDate(): Date {
     const currentDate = new Date();
-    const careerStartDate = new Date(currentDate.setMonth(currentDate.getMonth() - this.player.monthsOfExperience));
+    const careerStartDate = new Date(
+      currentDate.setMonth(currentDate.getMonth() - this.player.monthsOfExperience)
+    );
     return careerStartDate;
   }
 
@@ -53,10 +55,12 @@ export class PlayerDetailsComponent implements OnInit {
   }
 
   transferPlayer(): void {
-      this.playerService.transferPlayer(this.player.id, this.newTeamId).subscribe({
+    this.playerService
+      .transferPlayer(this.player.id, this.newTeamId)
+      .subscribe({
         next: (response) => {
           console.log(response);
-          this.getPlayer(); //
+          this.getPlayer();
         },
         error: (error) => {
           console.log(error);

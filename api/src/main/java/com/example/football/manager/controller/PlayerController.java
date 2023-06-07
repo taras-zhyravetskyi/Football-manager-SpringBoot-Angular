@@ -7,6 +7,8 @@ import com.example.football.manager.dto.response.PlayerResponseDto;
 import com.example.football.manager.model.Player;
 import com.example.football.manager.service.PlayerService;
 import java.util.List;
+import javax.transaction.Transactional;
+import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-
 @RestController
 @AllArgsConstructor
 @RequestMapping("/players")
@@ -28,6 +28,7 @@ public class PlayerController {
     private final ResponseDtoMapper<PlayerResponseDto, Player> responseMapper;
 
     @GetMapping("/transfer/{playerId}/team/{teamToId}")
+    @Transactional
     public PlayerResponseDto transferPlayer(
             @PathVariable Long playerId,
             @PathVariable Long teamToId

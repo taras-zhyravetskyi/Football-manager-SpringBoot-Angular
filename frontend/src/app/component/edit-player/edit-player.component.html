@@ -1,25 +1,29 @@
 <div class="edit-player-container">
   <h2>Edit Player</h2>
   <form [formGroup]="playerForm">
-    <label>
-      Name:
-      <input formControlName="name" name="name" />
-    </label>
-    <label>
-      Age:
-      <input formControlName="age" name="age" />
-    </label>
-    <label>
-      Start Career Date:
-      <input type="date" formControlName="startDate" name="startDate" required>
-    </label>
-    <label>
-      Team ID:
-      <input formControlName="teamId" name="teamId" />
-    </label>
+    <mat-form-field>
+      <mat-label>Name:</mat-label>
+      <input matInput formControlName="name" name="name" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Age:</mat-label>
+      <input matInput formControlName="age" name="age" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Start Career Date:</mat-label>
+      <input matInput type="date" formControlName="startDate" name="startDate" required>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Team ID:</mat-label>
+      <input matInput formControlName="teamId" name="teamId" />
+    </mat-form-field>
+
     <div class="buttons">
-      <button (click)="updatePlayer()">Update</button>
-      <button (click)="goBack()">Go back</button>
+      <button mat-raised-button color="primary" (click)="updatePlayer()">Update</button>
+      <button mat-raised-button (click)="goBack()">Go back</button>
     </div>
   </form>
 </div>

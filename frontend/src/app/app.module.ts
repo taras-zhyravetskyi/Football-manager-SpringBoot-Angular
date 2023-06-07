@@ -13,6 +13,8 @@ import { PlayerListComponent } from './component/player-list/player-list.compone
 import { AddPlayerComponent } from './component/add-player/add-player.component';
 import { PlayerDetailsComponent } from './component/player-details/player-details.component';
 import { EditPlayerComponent } from './component/edit-player/edit-player.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from "./material/material.module";
 
 @NgModule({
   declarations: [
@@ -32,7 +34,10 @@ import { EditPlayerComponent } from './component/edit-player/edit-player.compone
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

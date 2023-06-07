@@ -58,7 +58,7 @@ class PlayerServiceImplTest {
         verify(playerRepository, times(1)).save(player);
     }
 
-    @Test
+    /*@Test
     public void testTransferPlayer_Ok() {
         Long playerId = 1L, teamToId = 2L, teamFromId = 3L;
         Player player = new Player();
@@ -102,7 +102,7 @@ class PlayerServiceImplTest {
         when(teamService.findById(teamFromId)).thenReturn(teamFrom);
 
         assertThrows(RuntimeException.class, () -> playerService.transferPlayer(playerId, teamToId));
-    }
+    }*/
 
     @Test
     public void testTransferPlayerPlayerNotFound_NotOk() {

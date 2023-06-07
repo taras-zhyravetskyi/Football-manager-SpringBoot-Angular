@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { TeamService } from 'src/app/service/team.service';
 import { Team } from 'src/app/model/team';
 
@@ -10,8 +9,10 @@ import { Team } from 'src/app/model/team';
 })
 export class TeamListComponent implements OnInit {
   teams: Team[] = [];
+  displayedColumns: string[] = ['id', 'name', 'country', 'city', 'actions'];
 
-  constructor(private teamService: TeamService, private router: Router) { }
+
+  constructor(private teamService: TeamService) { }
 
   ngOnInit(): void {
     this.getTeams();
@@ -29,7 +30,10 @@ export class TeamListComponent implements OnInit {
     });
   }
 
-  viewTeamDetails(id: number): void {
-    this.router.navigate(['/teams', id]);
+  scrollToAddTeam(): void {
+    const element = document.getElementById('add-team');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 }
